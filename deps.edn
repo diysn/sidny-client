@@ -1,0 +1,7 @@
+{:deps {org.clojure/clojure       {:mvn/version "1.11.1"}
+        org.clojure/clojurescript {:mvn/version "1.11.60"}
+        reagent/reagent           {:mvn/version "1.1.1"}
+        cljs-http/cljs-http       {:mvn/version "0.1.46"}
+        thheller/shadow-cljs      {:mvn/version "2.19.5"}
+        binaryage/devtools        {:mvn/version "1.0.6"}}
+ :paths ["src/main/clojure"]}

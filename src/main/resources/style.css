@@ -1,0 +1,126 @@
+
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+/*@font-face {*/
+/*    font-family: "Atkinson Hyperlegible";*/
+/*    src: url(font/AtkinsonHyperlegible-Regular.ttf) format("truetype");*/
+/*}*/
+
+body {
+    margin: 0;
+    font-family: "Atkinson Hyperlegible", sans-serif;
+}
+
+/*
+
+Styling:
+
+different states for messages:
+    read / unread                                               read - light grey, unread - pale green
+    focused single message                                      pale cyan
+    other message (related to focused single message)
+      target
+      reply
+      repliesto
+    message in big list
+
+*/
+
+.header {
+    position: sticky;
+    top: 0;
+    /*background-color: white;*/
+    background-color: rgb(245,245,245);
+    border-bottom: 1px solid rgb(128,128,128);
+    padding: 10px;
+}
+.content {
+    padding: 0 10px 10px;
+}
+.larger {
+    font-size: x-large;
+}
+.center {
+    text-align: center;
+}
+.call-to-action {
+    cursor: pointer;
+    font-size: xx-large;
+    background-color: lightgreen;
+    border-radius: 15px;
+    padding: 10px 20px;
+    margin: 50px;
+    box-shadow: 3px 5px #888888;
+}
+
+.item {
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    box-shadow: 0 5px 10px 0 gray;
+}
+.unread {
+    background-color: rgb(245,255,245);
+    border: 3px solid lawngreen;
+}
+.read {
+    background-color: rgb(245,245,245);
+    border: 3px solid rgb(180,180,180);
+}
+.focus {
+    background-color: rgb(240,255,255);
+    border: 3px solid cyan;
+}
+.blur {
+    cursor: pointer;
+}
+
+.columns {
+    display: flex;
+}
+
+div.icon {
+    padding-top: 10px;
+}
+
+img.icon {
+    max-width: 60px;
+    max-height: 60px;
+}
+
+.blur img.icon {
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.msg {
+    background-color: white;
+    border: 1px solid rgb(200,200,200);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0 0 10px;
+}
+
+pre {
+    margin: 0;
+    font-family: "Atkinson Hyperlegible", sans-serif;
+}
+
+.link {
+    color: blue;
+    cursor: pointer;
+    text-decoration: none;
+}
+.link:hover {
+    text-decoration: underline;
+}
+
+span.spaced {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+.links {
+    padding-top: 10px;
+}
+

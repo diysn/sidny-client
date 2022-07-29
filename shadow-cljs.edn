@@ -1,0 +1,21 @@
+;; shadow-cljs configuration
+{:deps     {:aliases []}
+ ;:source-paths
+ ;["src/dev"
+ ; "src/main"
+ ; "src/test"]
+
+ ;:dependencies
+ ;[]
+ :nrepl    {:port       9000
+            :middleware []}
+ :dev-http {8280 {:root "out/site"
+                  :host "localhost"}}
+ :builds   {:client {:target     :browser
+                     :output-dir "out/site/js"
+                     :asset-path "/js"
+                     :modules    {:main {:init-fn core/init}}
+                     :devtools   {:after-load        core/mount-root
+                                  :watch-dir         "src/main/resources"
+                                  ;:watch-path        "/web"
+                                  :open-file-command ["idea" :pwd "--line" :line :file]}}}}

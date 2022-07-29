@@ -1,0 +1,19 @@
+{
+  "name": "sidny-client",
+  "version": "0.0.1",
+  "scripts": {
+    "watch:resources": "mkdir -p out/site && onchange --initial 'src/main/resources/**/*' -- rsync -va src/main/resources/ out/site/",
+    "watch:cljs": "shadow-cljs watch client",
+    "watch": "npm-run-all --parallel watch:*"
+  },
+  "private": true,
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "onchange": "^7.1.0",
+    "shadow-cljs": "^2.16.12"
+  }
+}
