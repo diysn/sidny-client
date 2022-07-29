@@ -8,7 +8,8 @@
     [goog.net XhrIo]
     [goog.date UtcDateTime]))
 
-(def root "http://localhost:8280/examples/sidny.sidny")
+(def root "https://raw.githubusercontent.com/diysn/sidny-client/main/src/main/resources/examples/sidny.sidny")
+;(def root "http://localhost:8280/examples/sidny.sidny")
 
 (defonce !state (r/atom { ;:view  [root] ; nil is just show all sub*,followed items in order, else a url. collection is history -> TODO: don't store this state here! put it in the hash!
                          :items {}})) ; items {url -> {id (hash url)
