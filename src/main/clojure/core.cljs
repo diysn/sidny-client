@@ -58,7 +58,6 @@
   ([url] (http-get-message url no-op))
   ([url on-success]
    ; TODO: should never come in here unless it ends in .json, non-json links should open in a new window
-   ; TODO: OR sidny:// + sidnys://  ???
    ; TODO: OR *.sidny extension!
    (println 'http-get url)
    (if-let [item (get-in @!state [:items url])]
@@ -109,15 +108,15 @@
 
   )
 
+(defn link-attrs [url & {:as attrs}]
+  (merge attrs (if (string/ends-with? (or url "") ".sidny")
+                 {:href (str "#url=" (js/encodeURIComponent url))}
+                 {:href   url
+                  :target "_blank"})))
+
 (defn navigate-to [url]
-  ; TODO: make these normal links!
-  (println 'navigate-to url (aget js/History "length"))
-  (if (string/ends-with? url ".sidny")
-    (do
-      (fetch-with-author url (fn [item] (mark-as-read (:url item))))
-      (hash/assoc-hash :url url))
-    (.focus (.open js/window url '_blank')))
-  false)
+  (fetch-with-author url (fn [item] (mark-as-read (:url item))))
+  (hash/assoc-hash :url url))
 
 (defn just-navigate-to [url]
   (fn [event]
@@ -127,30 +126,24 @@
 (defmulti render-links-of-type (fn [_current-url m] (key m)))
 (defmethod render-links-of-type :default [_ [_ {:keys [rel href]}]]
   [:span "(" [:a {:href href} rel] ")"])
-; next, just show a link
-; item, just show a link
-; reply, show some levels of replies below - merge with things that are replies but aren't referenced from the parent
-; repliesto, show parent above?
-; target, show target inside?
-; icon
-; note
 
 (defmethod render-links-of-type :item [current-url [_ items]]
   (into [:span]
         (for [{:keys [href] label :name} items]
-          [:span.spaced {:key (hash href)
-                         :on-click (just-navigate-to href)
-                         :class    (when (not= current-url href) "link")}
-           (or label (last (string/split href "/")))])))
+          (if (not= current-url href)
+            [:a.spaced (link-attrs href :key (hash href))
+             (or label (last (string/split href "/")))]
+            [:span.placeholder.spaced (or label (last (string/split href "/")))]))))
 
 (def special-links #{:icon :author :first :prev :next :last :up :reply :repliesto :target})
 
 (defn render-single-link [current-url label linkset placeholder?]
-  (cond
-    (seq linkset) [[:span.spaced {:on-click (just-navigate-to (:href (first linkset)))
-                                  :class    (when (not= current-url (:href (first linkset))) "link")}
-                    label]]
-    placeholder? [[:span.spaced {:class "notlink"} label]]))
+  (if (seq linkset)
+    (if (not= current-url (:href (first linkset)))
+      [[:a.spaced (link-attrs (:href (first linkset))) label]]
+      [[:span.placeholder.spaced label]])
+    (when placeholder?
+      [[:span.placeholder.spaced label]])))
 
 (defn render-links [current-url first' prev links next' last']
   (into [:div.links]
@@ -164,17 +157,18 @@
 (defn render-name [current-url item]
   (let [label (or (-> item :content :name)
                   (last (string/split (:url item) "/")))]
-    [:span.spaced {:key      (hash label)
-                   :on-click (just-navigate-to (:url item))
-                   :class    (when (not= current-url (:url item)) "link")}
-     label]))
+    (if (not= current-url (:url item))
+      [:a.spaced (link-attrs (:url item)
+                             :key (hash label))
+       label]
+      [:span.placeholder.spaced label])))
 
 (defn render-icon [item]
   (let [icon-href (-> item :content :links :icon first :href)
         label (-> item :content :name)]
-    [:div.icon {:key      (hash icon-href)
-                :on-click (just-navigate-to (:url item))
-                :title    label}
+    [:a.icon (link-attrs (:url item)
+                         :key (hash icon-href)
+                         :title label)
      [:img.icon.link {:src icon-href}]]))
 
 (defn find-authors [item] ; up to 10 authors, 1 level deep
@@ -195,9 +189,8 @@
           (for [[_ text link-text url _ title]
                 (re-seq #"(\[([^\]]+)\]\(([^\)\s]+)\s*(\"([^\)]*)\"\s*)?\)|\[|[^\[]+)" msg)]
             (if url
-              [:span {:on-click (just-navigate-to (absolute-href current-url url))
-                      :class    "link"
-                      :title    title}
+              [:a (link-attrs (absolute-href current-url url)
+                              :title title)
                link-text]
               [:span text])))))
 
@@ -214,7 +207,6 @@
     [:div.item.blur {:key   (str id)
                      :class (if read "read" "unread")
                      :on-click (just-navigate-to url)}
-
      (into [:div] (interpose "&" (map (partial render-name current-url) authors)))
      [:div.columns
       (into [:div] (map render-icon authors))
@@ -225,12 +217,10 @@
   [])
 
 (defn ensure-present [links]
-  (seq (mapv #(get-or-fetch (:href %)) links))
-  ;nil
-  #_(seq (remove #(http-get-message (:href %)) links)))
+  (seq (mapv #(get-or-fetch (:href %)) links)))
 
 (defn render-item [current-url {:keys [id url content read] :as item}]
-  (when-not item (http-get-message current-url))
+  (when-not item (fetch-with-author current-url))
   (let [authors (find-authors item)
         ups (find-ups item)
         {:keys [prev reply repliesto target note]
@@ -263,7 +253,7 @@
 
 (defn render-start []
   [:div.center {}
-   [:button.call-to-action {:on-click #(navigate-to root)} "I am sitting comfortably. Please begin."]])
+   [:a.call-to-action (link-attrs root) "I am sitting comfortably. Please begin."]])
 
 (defn render-app []
   (let [{:keys [items hash]} @!state
