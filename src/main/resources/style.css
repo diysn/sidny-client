@@ -107,16 +107,18 @@ pre {
     font-family: "Atkinson Hyperlegible", sans-serif;
 }
 
-.link {
+a {
     color: blue;
-    cursor: pointer;
     text-decoration: none;
 }
-.link:hover {
+a:hover {
     text-decoration: underline;
 }
+.placeholder {
+    color: gray;
+}
 
-span.spaced {
+.spaced {
     margin-right: 5px;
     margin-left: 5px;
 }
