@@ -2,7 +2,7 @@
  "links":
  [{"rel":"author", "href":"..\/sidny.sidny"},
   {"rel":"up", "href":"about.sidny"},
-  {"rel":"first", "href":"1.sidny"}, {"rel":"last", "href":"7.sidny"},
+  {"rel":"first", "href":"1.sidny"}, {"rel":"last", "href":"9.sidny"},
   {"rel":"prev", "href":"3.sidny"}, {"rel":"next", "href":"5.sidny"},
   {"rel":"target", "href":"3.sidny"},
   {"rel":"reply", "href":"5.sidny"}]}
