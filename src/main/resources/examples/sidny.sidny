@@ -1,0 +1,7 @@
+{"name":"Sidny",
+ "msg":
+ "Sidny is a DIY Social Network and takes it's name from that (a D.I.Y. S.N. -> SIDNY).\nYou can read more about Sidny in [the 'about' sequence](about\/about.sidny \"Learn about Sidny\").",
+ "links":
+ [{"rel":"icon", "href":"sidny.png"},
+  {"rel":"author", "href":"sidny.sidny"},
+  {"rel":"item", "href":"sequences.sidny"}]}

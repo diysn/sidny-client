@@ -1,0 +1,8 @@
+{"msg":"Here are some messages that describe Sidny.",
+ "links":
+ [{"rel":"author", "href":"..\/sidny.sidny"},
+  {"rel":"up", "href":"..\/sequences.sidny"},
+  {"rel":"item", "href":"1.sidny"}, {"rel":"item", "href":"2.sidny"},
+  {"rel":"item", "href":"3.sidny"}, {"rel":"item", "href":"4.sidny"},
+  {"rel":"item", "href":"5.sidny"}, {"rel":"item", "href":"6.sidny"},
+  {"rel":"item", "href":"7.sidny"}]}

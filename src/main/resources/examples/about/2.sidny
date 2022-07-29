@@ -1,0 +1,7 @@
+{"msg":
+ "By making things as simple as they can reasonably be, it should be easier to take control.",
+ "links":
+ [{"rel":"author", "href":"..\/sidny.sidny"},
+  {"rel":"up", "href":"about.sidny"},
+  {"rel":"first", "href":"1.sidny"}, {"rel":"last", "href":"7.sidny"},
+  {"rel":"prev", "href":"1.sidny"}, {"rel":"next", "href":"3.sidny"}]}

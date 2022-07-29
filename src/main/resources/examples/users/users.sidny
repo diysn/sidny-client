@@ -1,0 +1,5 @@
+{"msg":"Here are some known Sidny authors.",
+ "links":
+ [{"rel":"author", "href":"..\/sidny.sidny"},
+  {"rel":"up", "href":"..\/sequences.sidny"},
+  {"rel":"item", "href":"..\/sidny.sidny"}]}

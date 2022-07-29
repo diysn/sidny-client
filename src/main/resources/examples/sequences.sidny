@@ -1,0 +1,7 @@
+{"msg":
+ "Here are some sequences of messages.\n[about.sidny](about\/about.sidny) describes the Sidny social network.\nusers.sidny provides a list of known users.",
+ "links":
+ [{"rel":"author", "href":"sidny.sidny"},
+  {"rel":"up", "href":"sidny.sidny"},
+  {"rel":"item", "href":"about\/about.sidny"},
+  {"rel":"item", "href":"users\/users.sidny"}]}

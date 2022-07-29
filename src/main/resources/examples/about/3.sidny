@@ -1,0 +1,7 @@
+{"msg":
+ "Messages are small, informally-specified JSON files. They use the '.sidny' file extension.",
+ "links":
+ [{"rel":"author", "href":"..\/sidny.sidny"},
+  {"rel":"up", "href":"about.sidny"},
+  {"rel":"first", "href":"1.sidny"}, {"rel":"last", "href":"7.sidny"},
+  {"rel":"prev", "href":"2.sidny"}, {"rel":"next", "href":"4.sidny"}]}
