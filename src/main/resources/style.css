@@ -131,3 +131,31 @@ a:hover {
     margin-top: 10px;
 }
 
+div.carousel {
+    margin-top: 10px;
+    overflow: auto;
+    white-space: nowrap;
+}
+img.carousel {
+    vertical-align: top;
+    max-width: 94vw; /* should calculate this properly - or just make the carousel full page width */
+    width: 1000px;
+    object-fit: contain;
+}
+
+.blur img.carousel {
+    width: 200px;
+    max-width: 20vw;
+}
+
+input[type=text] {
+    font-size: larger;
+    width: 75vw;
+}
+
+span.label {
+    display: inline-block;
+    width: 20vw;
+    text-align: left;
+    font-weight: bold;
+}

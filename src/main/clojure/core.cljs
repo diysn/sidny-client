@@ -135,7 +135,7 @@
              (or label (last (string/split href "/")))]
             [:span.placeholder.spaced (or label (last (string/split href "/")))]))))
 
-(def special-links #{:icon :author :first :prev :next :last :up :reply :repliesto :target})
+(def special-links #{:icon :author :first :prev :next :last :up :reply :repliesto :target :image})
 
 (defn render-single-link [current-url label linkset placeholder?]
   (if (seq linkset)
@@ -194,23 +194,40 @@
                link-text]
               [:span text])))))
 
+(defn carousel [image-set]
+  (when (seq image-set)
+    (let [carousel-id (gensym "carousel")
+          total (count image-set)]
+      (into [:div.carousel]
+            (map-indexed (fn [idx {:keys [href]}]
+                           (let [id (str carousel-id "-" idx)
+                                 next-id (str carousel-id "-" (mod (inc idx) total))]
+                             [:img.carousel {:id       id
+                                             :src      href
+                                             :on-click (fn [e]
+                                                         (.scrollIntoView (.getElementById js/document next-id))
+                                                         (.stopPropagation e))}]))
+                         image-set)))))
+
 (declare render-other-item)
 
-(defn render-msg [current-url url msg note target]
+(defn render-msg [current-url url msg target]
   [:div {:class "msg"}
    (format-message url msg)
    (when target
      (render-other-item current-url target))])
 
 (defn render-other-item [current-url {:keys [id url content read] :as item}]
-  (let [authors (find-authors item)]
+  (let [authors (find-authors item)
+        image (:image (:links content))]
     [:div.item.blur {:key   (str id)
                      :class (if read "read" "unread")
                      :on-click (just-navigate-to url)}
      (into [:div] (interpose "&" (map (partial render-name current-url) authors)))
      [:div.columns
       (into [:div] (map render-icon authors))
-      (render-msg current-url url (:msg content) (-> content :links :note) nil)]]))
+      (render-msg current-url url (:msg content) nil)]
+     [carousel image]]))
 
 (defn find-replies-to [url]
   ; TODO: look in !state for any message that repliesto this one
@@ -223,7 +240,7 @@
   (when-not item (fetch-with-author current-url))
   (let [authors (find-authors item)
         ups (find-ups item)
-        {:keys [prev reply repliesto target note]
+        {:keys [prev reply repliesto target image]
          next' :next first' :first last' :last} (:links content)
 
         replies-to (ensure-present repliesto)
@@ -240,7 +257,8 @@
       (into [:div] (interpose "&" (map (partial render-name current-url) authors)))
       [:div.columns
        (into [:div] (map render-icon authors))
-       (render-msg current-url url (:msg content) note targets)]
+       (render-msg current-url url (:msg content) targets)]
+      [carousel image]
 
       (render-links current-url first' prev (:links content) next' last')]
 
