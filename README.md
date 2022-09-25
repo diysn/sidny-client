@@ -2,8 +2,15 @@
 
 This is a proof-of-concept client for the SIDNY social network.
 
+## Contributing
 
-# Development
+Please contribute.
+
+Feel free to fork the project and make your own version. Pull requests are welcome, but should be 
+focused on core functionality. If you want more features, please create your own client 
+(forking this one if you so wish).
+
+## Development
 
 The project is written in ClojureScript using [shadow-cljs](https://github.com/thheller/shadow-cljs) and
 [reagent](https://github.com/reagent-project/reagent).
