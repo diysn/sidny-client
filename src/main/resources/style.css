@@ -85,10 +85,7 @@ different states for messages:
 
 .columns {
     display: flex;
-}
-
-div.icon {
-    padding-top: 10px;
+    margin-top: 10px;
 }
 
 img.icon {
@@ -106,12 +103,13 @@ img.icon {
     border: 1px solid rgb(200,200,200);
     border-radius: 5px;
     padding: 10px;
-    margin: 10px 0 0 10px;
+    margin: 0 0 0 10px;
 }
 
 pre {
     margin: 0;
     font-family: "Atkinson Hyperlegible", sans-serif;
+    white-space: pre-wrap;
 }
 
 a {
@@ -130,6 +128,6 @@ a:hover {
     margin-left: 5px;
 }
 .links {
-    padding-top: 10px;
+    margin-top: 10px;
 }
 
