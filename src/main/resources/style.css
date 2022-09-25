@@ -48,7 +48,7 @@ different states for messages:
     display: inline-block;
     cursor: pointer;
     font-size: xx-large;
-    background-color: lightgreen;
+    background-color: rgb(170,255,0);
     border-radius: 15px;
     border: 2px solid black;
     color: black;
@@ -58,7 +58,7 @@ different states for messages:
     box-shadow: 3px 5px #888888;
 }
 .call-to-action:hover {
-    background: linear-gradient(90deg, rgb(170,255,0) 0%, rgb(212,255,0) 45%, rgb(170,255,0) 100%);
+    background: linear-gradient(90deg, rgb(170,255,0) 0%, rgb(238, 255, 0) 45%, rgb(170,255,0) 100%);
 }
 
 .item {
