@@ -60,6 +60,8 @@
    ; TODO: should never come in here unless it ends in .json, non-json links should open in a new window
    ; TODO: OR *.sidny extension!
    (println 'http-get url)
+   (when-not (string/ends-with? url ".sidny")
+     (println "ERROR!!!"))
    (if-let [item (get-in @!state [:items url])]
      (on-success item)
      (.send XhrIo
@@ -72,12 +74,16 @@
                              {:id      (hash url)
                               :url     url
                               :content (update content :links pre-process-links url)
-                              :order   (:timestamp content (.toUTCIsoString (UtcDateTime.)))})
+                              :timestamp (:timestamp content)
+                              :discovered (.toUTCIsoString (UtcDateTime.))})
                            ::error)]
                 (swap! !state update-in [:items url] merge item)
                 (on-success item)))
             nil
             {"Accept" "application/json"}))))
+
+(defn item-ordering [{:keys [timestamp discovered]}]
+  (or timestamp discovered))
 
 (defn fetch-with-author
   ([url] (fetch-with-author url no-op))
@@ -110,13 +116,13 @@
 
 (defn link-attrs [url & {:as attrs}]
   (merge attrs (if (string/ends-with? (or url "") ".sidny")
-                 {:href (str "#url=" (js/encodeURIComponent url))}
+                 {:href (str "#view=msg&url=" (js/encodeURIComponent url))}
                  {:href   url
                   :target "_blank"})))
 
 (defn navigate-to [url]
   (fetch-with-author url (fn [item] (mark-as-read (:url item))))
-  (hash/assoc-hash :url url))
+  (hash/assoc-hash :view "msg" :url url))
 
 (defn just-navigate-to [url]
   (fn [event]
@@ -252,7 +258,7 @@
        (into [:div] (mapv (partial render-other-item current-url) replies-to)))
 
      [:div.item.focus {:class (if read "read" "unread")}
-
+      ; TODO: add timestamp somewhere?
       (into [:div] (interpose ">" (map (partial render-name current-url) ups)))
       (into [:div] (interpose "&" (map (partial render-name current-url) authors)))
       [:div.columns
@@ -266,25 +272,57 @@
        (into [:div] (mapv (partial render-other-item current-url) replies)))]))
 
 (defn render-items [url items]
-  (into [:div {}]
-        (map (partial render-other-item url) (->> items (sort-by :order)))))
+  (if (seq items)
+    (into [:div {}]
+          (map (partial render-other-item url) (->> items (sort-by item-ordering))))
+    [:div.center {}
+     [:a.call-to-action (link-attrs root) "I am sitting comfortably. Please begin."]]))
 
-(defn render-start []
-  [:div.center {}
-   [:a.call-to-action (link-attrs root) "I am sitting comfortably. Please begin."]])
+(defn render-input [{:keys [label] :as attrs}]
+  [:label [:span.label (str label ":")]
+   [:input (merge {:type "text"}
+                  (dissoc attrs :label))]])
+
+(defn render-configure []
+  ; TODO: something with the entered configuration
+  [:div [:h1 "Configure"]
+   [:div [:h2 "Identity"]
+    [:div "Here you can enter the URL to a message that describes you as an author."]
+    [render-input {:label "URL" :placeholder "https://www.example.com/sidny-messages/me.sidny"}]]
+   [:div
+    "Here you can configure a backend to write messages to."
+    " This client does not provide a backend, but third party services are available."]
+   [:div
+    [:h2 "Supported backend providers:"]
+    [:h3 "S3 (Amazon Web Services)"]
+    [render-input {:label "Bucket" :placeholder "my-s3-bucket-name"}]
+    [render-input {:label "Region" :placeholder "us-east-1"}]
+    [render-input {:label "Path" :placeholder "public/sidny/my-messages/"}]
+    [render-input {:label "Access Key Id" :placeholder "AKIABCDEFGHIJKLMNOPQ"}]
+    [render-input {:label "Secret Access Key" :placeholder "abCDefGHijKLmnOPqrSTuvWXyz+0123456789/AB"}]
+    [:br]
+    [:br]
+    [:a (link-attrs "https://github.com/diysn/sidny-client#contributing")
+     "Add another backend..."]]])
 
 (defn render-app []
   (let [{:keys [items hash]} @!state
-        {:keys [url]} hash]
+        {:keys [view url]} hash]
     [:div {}
      [:div.header
-      [:a.link.larger {:href "#"} "Basic SIDNY Client"]
-      [:div (or (some->> url (str "Item: ")) "Home")]]
+      [:div.header-left
+       [:div.home
+        [:a.link.larger {:href "#view=home"} "Simple SIDNY Client"]]
+       [:div.location
+        [:div (or (some->> url (str "Item: ")) "Home")]]]
+      [:div.header-right
+       [:a {:href "#view=configure"} "Configure"]]]
      [:div.content
       (cond
-        url [render-item url (get items url)]
-        (seq items) [render-items url (vals items)]
-        :else [render-start])]]))
+        (= view "home") [render-items url (vals items)]
+        (= view "msg") [render-item url (get items url)]
+        (= view "configure") [render-configure]
+        :else [render-items nil []])]]))
 
 (defn mount-root []
   (dom/render [render-app] (.getElementById js/document "root")))

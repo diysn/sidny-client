@@ -34,6 +34,9 @@ different states for messages:
     background-color: rgb(245,245,245);
     border-bottom: 1px solid rgb(128,128,128);
     padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 .content {
     padding: 0 10px 10px;
