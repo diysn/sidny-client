@@ -15,8 +15,8 @@
        (string/join "&")
        (aset js/location "hash")))
 
-(defn assoc-hash [k v]
-  (set-hash (assoc (get-hash) k v)))
+(defn assoc-hash [& kvs]
+  (set-hash (apply assoc (get-hash) kvs)))
 
 (defn setup-up-navigation [!state ks]
   (let [update-state-from-hash! #(swap! !state assoc-in ks (get-hash))]
