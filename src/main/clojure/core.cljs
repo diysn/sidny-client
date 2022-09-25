@@ -285,16 +285,16 @@
 
 (defn render-configure []
   ; TODO: something with the entered configuration
-  [:div [:h1 "Configure"]
-   [:div [:h2 "Identity"]
+  [:div
+   [:div [:h1 "Identity"]
     [:div "Here you can enter the URL to a message that describes you as an author."]
     [render-input {:label "URL" :placeholder "https://www.example.com/sidny-messages/me.sidny"}]]
    [:div
     "Here you can configure a backend to write messages to."
     " This client does not provide a backend, but third party services are available."]
    [:div
-    [:h2 "Supported backend providers:"]
-    [:h3 "S3 (Amazon Web Services)"]
+    [:h1 "Supported backend providers"]
+    [:h2 "S3 (Amazon Web Services)"]
     [render-input {:label "Bucket" :placeholder "my-s3-bucket-name"}]
     [render-input {:label "Region" :placeholder "us-east-1"}]
     [render-input {:label "Path" :placeholder "public/sidny/my-messages/"}]
@@ -311,10 +311,11 @@
     [:div {}
      [:div.header
       [:div.header-left
-       [:div.home
-        [:a.link.larger {:href "#view=home"} "Simple SIDNY Client"]]
-       [:div.location
-        [:div (or (some->> url (str "Item: ")) "Home")]]]
+       [:a.link.larger {:href "#view=home"} "Simple SIDNY Client"]
+       [:div (cond
+               (= view "home") "Home"
+               (= view "msg") (str "Item: " url)
+               (= view "configure") "Configure")]]
       [:div.header-right
        [:a {:href "#view=configure"} "Configure"]]]
      [:div.content
