@@ -1,5 +1,6 @@
 {"msg":"Here are some known Sidny authors.",
  "links":
- [{"rel":"author", "href":"..\/sidny.sidny"},
+ [{"rel":"author", "href":"..\/author.sidny"},
   {"rel":"up", "href":"..\/sequences.sidny"},
-  {"rel":"item", "href":"..\/sidny.sidny"}]}
+  {"rel":"item", "href":"..\/author.sidny"}],
+ "timestamp":"2022-07-30T17:07:33.395938490Z"}

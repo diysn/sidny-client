@@ -1,7 +1,8 @@
 {"msg":
  "Here are some sequences of messages.\n[about.sidny](about\/about.sidny) describes the Sidny social network.\nusers.sidny provides a list of known users.",
  "links":
- [{"rel":"author", "href":"sidny.sidny"},
-  {"rel":"up", "href":"sidny.sidny"},
+ [{"rel":"author", "href":"author.sidny"},
+  {"rel":"up", "href":"author.sidny"},
   {"rel":"item", "href":"about\/about.sidny"},
-  {"rel":"item", "href":"users\/users.sidny"}]}
+  {"rel":"item", "href":"users\/users.sidny"}],
+ "timestamp":"2022-07-30T17:07:33.384339750Z"}

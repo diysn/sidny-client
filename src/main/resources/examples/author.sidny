@@ -3,5 +3,6 @@
  "Sidny is a DIY Social Network and takes it's name from that (a D.I.Y. S.N. -> SIDNY).\nYou can read more about Sidny in [the 'about' sequence](about\/about.sidny \"Learn about Sidny\").",
  "links":
  [{"rel":"icon", "href":"sidny.png"},
-  {"rel":"author", "href":"sidny.sidny"},
-  {"rel":"item", "href":"sequences.sidny"}]}
+  {"rel":"author", "href":"author.sidny"},
+  {"rel":"item", "href":"sequences.sidny"}],
+ "timestamp":"2022-07-30T17:07:33.390604392Z"}

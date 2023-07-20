@@ -1,7 +1,9 @@
 {"msg":
  "To learn more about the structure of sidny messages, have a look at [the JSON that defines these example messages](https:\/\/github.com\/diysn\/sidny-client\/tree\/main\/src\/main\/resources\/examples).",
  "links":
- [{"rel":"author", "href":"..\/sidny.sidny"},
+ [{"rel":"author", "href":"..\/author.sidny"},
   {"rel":"up", "href":"about.sidny"},
-  {"rel":"first", "href":"1.sidny"}, {"rel":"last", "href":"9.sidny"},
-  {"rel":"prev", "href":"7.sidny"}, {"rel":"next", "href":"9.sidny"}]}
+  {"rel":"first", "href":"1.sidny"}, {"rel":"last", "href":
+                                                    "10.sidny"},
+  {"rel":"prev", "href":"7.sidny"}, {"rel":"next", "href":"9.sidny"}],
+ "timestamp":"2022-07-30T17:07:33.348674142Z"}

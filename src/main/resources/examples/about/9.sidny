@@ -1,7 +1,10 @@
 {"msg":
  "To see source code for an example client that can browse sidny messages, have a look at [the simple sidny-client](https:\/\/github.com\/diysn\/sidny-client).",
  "links":
- [{"rel":"author", "href":"..\/sidny.sidny"},
+ [{"rel":"author", "href":"..\/author.sidny"},
   {"rel":"up", "href":"about.sidny"},
-  {"rel":"first", "href":"1.sidny"}, {"rel":"last", "href":"9.sidny"},
-  {"rel":"prev", "href":"8.sidny"}]}
+  {"rel":"first", "href":"1.sidny"}, {"rel":"last", "href":
+                                                    "10.sidny"},
+  {"rel":"prev", "href":"8.sidny"}, {"rel":"next", "href":
+                                                   "10.sidny"}],
+ "timestamp":"2022-07-30T17:07:33.359670260Z"}
