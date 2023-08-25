@@ -6,6 +6,8 @@
                                                     "10.sidny"},
   {"rel":"prev", "href":"9.sidny"},
   {"rel":"image", "href":"https:\/\/picsum.photos\/200"},
+  {"rel":"image", "href":"https:\/\/picsum.photos\/200\/100"},
+  {"rel":"image", "href":"https:\/\/picsum.photos\/100\/200"},
   {"rel":"image", "href":"https:\/\/picsum.photos\/300"},
   {"rel":"image", "href":"https:\/\/picsum.photos\/1000"}],
  "timestamp":"2022-09-25T15:45:32.551587744Z"}
